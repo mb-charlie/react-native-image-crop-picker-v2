@@ -1,2 +1,2 @@
 # react-native-image-crop-picker-v2
- Fixed error
+Fixed - unable to upload image from phone gallery
