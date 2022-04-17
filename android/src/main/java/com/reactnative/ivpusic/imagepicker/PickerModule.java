@@ -52,8 +52,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
-
-
 class PickerModule extends ReactContextBaseJavaModule implements ActivityEventListener {
 
     private static final int IMAGE_PICKER_REQUEST = 61110;
@@ -589,7 +587,6 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-
             String externalCacheDirPath = Uri.fromFile(activity.getExternalCacheDir()).getPath();
             String externalFilesDirPath = Uri.fromFile(activity.getExternalFilesDir(null)).getPath();
             String cacheDirPath = Uri.fromFile(activity.getCacheDir()).getPath();
@@ -691,6 +688,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
         image.putInt("height", options.outHeight);
         image.putString("mime", options.outMimeType);
         image.putInt("size", (int) new File(compressedImagePath).length());
+        image.putString("filename", compressedImage.getName());
         image.putString("modificationDate", String.valueOf(modificationDate));
 
         if (includeBase64) {
@@ -759,7 +757,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
                 .withOptions(options);
 
         if (width > 0 && height > 0) {
-            uCrop.withAspectRatio(width, height);
+            uCrop.withMaxResultSize(width, height).withAspectRatio(width, height);
         }
 
         uCrop.start(activity);
